@@ -36,9 +36,9 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div style={{ padding: "16px 24px", borderTop: "1px solid var(--border-glass)" }}>
-        <p style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>
-          v1.0 · ML-Powered
+      <div className="border-t border-gray-700 mt-auto p-4 text-center">
+        <p className="text-xs text-gray-500 uppercase tracking-wider">
+          v1.0 · AI Powered
         </p>
       </div>
     </aside>

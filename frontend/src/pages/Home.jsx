@@ -20,6 +20,13 @@ const COLORS = ["#3b82f6", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b",
 export default function Home() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showWelcome, setShowWelcome] = useState(true);
+
+    useEffect(() => {
+        // Auto-hide welcome after 5 seconds
+        const timer = setTimeout(() => setShowWelcome(false), 5000);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         axios.get(`${API}/dashboard_data`)
@@ -37,7 +44,7 @@ export default function Home() {
         return (
             <div className="loading">
                 <div className="spinner"></div>
-                <p>Loading dashboard data...</p>
+                <p className="text-gray-400">Loading dashboard data...</p>
             </div>
         );
     }
@@ -45,7 +52,7 @@ export default function Home() {
     if (!data) {
         return (
             <div className="loading">
-                <p>⚠️ Could not load data. Make sure the backend is running.</p>
+                <p className="text-yellow-400">⚠️ Could not load data. Make sure the backend is running.</p>
             </div>
         );
     }
@@ -53,10 +60,42 @@ export default function Home() {
     const { kpis, ratingDistribution, roomTypeDistribution, priceDistribution, ratingByRoomType } = data;
 
     return (
-        <div>
+        <div className="space-y-8">
+            {/* Welcome Hero Section */}
+            {showWelcome && (
+                <div className="relative overflow-hidden bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 border border-blue-500/20 rounded-2xl p-12 mb-8 animate-fade-in">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-10"></div>
+                    
+                    <div className="relative z-10 max-w-3xl">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="text-4xl">🌴</span>
+                            <span className="text-4xl">📊</span>
+                        </div>
+                        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-3">
+                            Sri Lanka Market Intelligence
+                        </h1>
+                        <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                            Welcome to your AI-powered tourism market analysis dashboard. Discover actionable insights about accommodation pricing, ratings, and market trends across Sri Lanka.
+                        </p>
+                        <div className="flex flex-wrap gap-4">
+                            <div className="px-6 py-3 bg-blue-500/20 border border-blue-400/30 rounded-lg">
+                                <p className="text-sm text-gray-300"><span className="text-blue-300 font-semibold">200+</span> ML Models</p>
+                            </div>
+                            <div className="px-6 py-3 bg-purple-500/20 border border-purple-400/30 rounded-lg">
+                                <p className="text-sm text-gray-300"><span className="text-purple-300 font-semibold">Real-time</span> Analytics</p>
+                            </div>
+                            <div className="px-6 py-3 bg-cyan-500/20 border border-cyan-400/30 rounded-lg">
+                                <p className="text-sm text-gray-300"><span className="text-cyan-300 font-semibold">Instant</span> Predictions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="page-header">
-                <h2>📊 Dashboard Overview</h2>
-                <p>Sri Lanka accommodation market intelligence at a glance</p>
+                <h2 className="text-3xl font-bold text-white mb-2">📊 Dashboard Overview</h2>
+                <p className="text-gray-400">Real-time market intelligence and key performance indicators</p>
             </div>
 
             {/* KPI Cards */}

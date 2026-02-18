@@ -1,5 +1,5 @@
-# 🇱🇰 Sri Lanka Advanced Market Intelligence Dashboard
-
+#LK Sri Lanka Advanced Market Intelligence Dashboard
+# BY PRAVEENA KURUKULADITHYA 
 A full-stack ML-powered dashboard for analyzing Sri Lanka's accommodation market. Built with React, FastAPI, PostgreSQL, and scikit-learn.
 
 ## 📁 Project Structure
