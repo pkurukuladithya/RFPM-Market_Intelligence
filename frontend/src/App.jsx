@@ -1,46 +1,30 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+/**
+ * App Root — Sets up React Router with Sidebar layout.
+ * All pages render inside the main content area.
+ */
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Home from "./pages/Home";
+import RatingPredictor from "./pages/RatingPredictor";
+import PriceRecommender from "./pages/PriceRecommender";
+import MarketAnalysis from "./pages/MarketAnalysis";
 
 function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [users, setUsers] = useState([]);
-
-  const fetchUsers = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/users/");
-    setUsers(res.data);
-  };
-
-  const addUser = async () => {
-    await axios.post("http://127.0.0.1:8000/users/", {
-      name,
-      email,
-    });
-    fetchUsers();
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   return (
-    <div>
-      <h1>User Form</h1>
-      <input
-        placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={addUser}>Add User</button>
-
-      <h2>Users List</h2>
-      {users.map((u) => (
-        <p key={u.id}>{u.name} - {u.email}</p>
-      ))}
-    </div>
+    <BrowserRouter>
+      <div className="app-layout">
+        <Sidebar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/predict-rating" element={<RatingPredictor />} />
+            <Route path="/predict-price" element={<PriceRecommender />} />
+            <Route path="/market-analysis" element={<MarketAnalysis />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 
